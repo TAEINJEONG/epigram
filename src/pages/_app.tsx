@@ -3,9 +3,13 @@ import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import nextI18NextConfig from '../../next-i18next.config.js';
+import '../i18n';
+import { appWithTranslation } from 'next-i18next';
+
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Component {...pageProps} />
@@ -13,3 +17,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </QueryClientProvider>
   );
 }
+
+export default appWithTranslation(MyApp, nextI18NextConfig);
