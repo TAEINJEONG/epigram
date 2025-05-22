@@ -14,8 +14,10 @@ const Test = () => {
   const { t } = useTranslation('common');
   return (
     <>
-      <h1>{t('hello')}</h1>
-      <LocaleSwitcher />
+      <div className="p-12">
+        <h1 className="text-[24px]">{t('hello')}</h1>
+        <LocaleSwitcher />
+      </div>
     </>
   );
 };

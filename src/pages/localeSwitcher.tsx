@@ -1,4 +1,3 @@
-// src/components/LocaleSwitcher.tsx
 import { useRouter } from 'next/router';
 
 export function LocaleSwitcher() {
@@ -7,9 +6,15 @@ export function LocaleSwitcher() {
   const nextLocale = supported.find((l) => l !== locale) ?? supported[0];
 
   const handleClick = () => {
-    // pathname, query → 동적 세그먼트와 쿼리스트링을 안전하게 유지
     push({ pathname, query }, asPath, { locale: nextLocale });
   };
 
-  return <button onClick={handleClick}>{nextLocale.toUpperCase()}</button>;
+  return (
+    <button
+      className="py-1 px-2 cursor-pointer bg-blue-400 text-white rounded-lg"
+      onClick={handleClick}
+    >
+      {nextLocale.toUpperCase()}
+    </button>
+  );
 }
