@@ -3,13 +3,235 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  font-family: 'pretendard';
+}
+
+@font-face {
+  font-family: 'Iropke Batang';
+  src:
+    url('../../public/fonts/IropkeBatangM.woff') format('woff'),
+    url('../../public/fonts/IropkeBatangM.otf') format('opentype');
+  font-display: swap;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Pretendard', sans;
   --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --font-pre: pretendard;
+  --font-iro: 'Iropke Batang';
+  /* 3xl */
+  --text-3xl-b: 32px;
+  --text-3xl-b--line-height: 42px;
+  --text-3xl-b--font-weight: 700;
+
+  --text-3xl-sb: 32px;
+  --text-3xl-sb--line-height: 42px;
+  --text-3xl-sb--font-weight: 600;
+
+  /* 2xl */
+  --text-2xl-b: 24px;
+  --text-2xl-b--line-height: 32px;
+  --text-2xl-b--font-weight: 700;
+
+  --text-2xl-sb: 24px;
+  --text-2xl-sb--line-height: 32px;
+  --text-2xl-sb--font-weight: 600;
+
+  --text-2xl-m: 24px;
+  --text-2xl-m--line-height: 32px;
+  --text-2xl-m--font-weight: 500;
+
+  --text-2xl-r: 24px;
+  --text-2xl-r--line-height: 32px;
+  --text-2xl-r--font-weight: 400;
+
+  /* xl */
+  --text-xl-b: 20px;
+  --text-xl-b--line-height: 32px;
+  --text-xl-b--font-weight: 700;
+
+  --text-xl-sb: 20px;
+  --text-xl-sb--line-height: 32px;
+  --text-xl-sb--font-weight: 600;
+
+  --text-xl-m: 20px;
+  --text-xl-m--line-height: 32px;
+  --text-xl-m--font-weight: 500;
+
+  --text-xl-r: 20px;
+  --text-xl-r--line-height: 32px;
+  --text-xl-r--font-weight: 400;
+
+  /* 2lg */
+  --text-2lg-b: 18px;
+  --text-2lg-b--line-height: 26px;
+  --text-2lg-b--font-weight: 700;
+
+  --text-2lg-sb: 18px;
+  --text-2lg-sb--line-height: 26px;
+  --text-2lg-sb--font-weight: 600;
+
+  --text-2lg-m: 18px;
+  --text-2lg-m--line-height: 26px;
+  --text-2lg-m--font-weight: 500;
+
+  --text-2lg-r: 18px;
+  --text-2lg-r--line-height: 26px;
+  --text-2lg-r--font-weight: 400;
+
+  /* lg */
+  --text-lg-b: 16px;
+  --text-lg-b--line-height: 26px;
+  --text-lg-b--font-weight: 700;
+
+  --text-lg-sb: 16px;
+  --text-lg-sb--line-height: 26px;
+  --text-lg-sb--font-weight: 600;
+
+  --text-lg-m: 16px;
+  --text-lg-m--line-height: 26px;
+  --text-lg-m--font-weight: 500;
+
+  --text-lg-r: 16px;
+  --text-lg-r--line-height: 26px;
+  --text-lg-r--font-weight: 400;
+
+  /* md */
+  --text-md-b: 14px;
+  --text-md-b--line-height: 24px;
+  --text-md-b--font-weight: 700;
+
+  --text-md-sb: 14px;
+  --text-md-sb--line-height: 24px;
+  --text-md-sb--font-weight: 600;
+
+  --text-md-m: 14px;
+  --text-md-m--line-height: 24px;
+  --text-md-m--font-weight: 500;
+
+  --text-md-r: 14px;
+  --text-md-r--line-height: 24px;
+  --text-md-r--font-weight: 400;
+
+  /* sm */
+  --text-sm-sb: 13px;
+  --text-sm-sb--line-height: 22px;
+  --text-sm-sb--font-weight: 600;
+
+  --text-sm-m: 13px;
+  --text-sm-m--line-height: 22px;
+  --text-sm-m--font-weight: 500;
+
+  /* xs */
+  --text-xs-sb: 12px;
+  --text-xs-sb--line-height: 20px;
+  --text-xs-sb--font-weight: 600;
+
+  --text-xs-m: 12px;
+  --text-xs-m--line-height: 18px;
+  --text-xs-m--font-weight: 500;
+
+  --text-xs-r: 12px;
+  --text-xs-r--line-height: 18px;
+  --text-xs-r--font-weight: 400;
+
+  /* ---------- Iropke Batang OTF ---------- */
+
+  /* 4xl */
+  --text-4xl-m: 40px;
+  --text-4xl-m--line-height: 52px;
+  --text-4xl-m--font-weight: 400;
+
+  /* 3xl */
+  --text-3xl-m: 32px;
+  --text-3xl-m--line-height: 48px;
+  --text-3xl-m--font-weight: 400;
+
+  /* 2xl */
+  --text-2xl-m: 24px;
+  --text-2xl-m--line-height: 40px;
+  --text-2xl-m--font-weight: 400;
+
+  /* xl */
+  --text-xl-m: 20px;
+  --text-xl-m--line-height: 28px;
+  --text-xl-m--font-weight: 400;
+
+  /* lg */
+  --text-lg-m: 16px;
+  --text-lg-m--line-height: 26px;
+  --text-lg-m--font-weight: 400;
+
+  /* md */
+  --text-md-m: 14px;
+  --text-md-m--line-height: 24px;
+  --text-md-m--font-weight: 400;
+
+  /* sm */
+  --text-sm-m: 13px;
+  --text-sm-m--line-height: 20px;
+  --text-sm-m--font-weight: 400;
+
+  /* xs */
+  --text-sm-m: 12px;
+  --text-sm-m--line-height: 18px;
+  --text-sm-m--font-weight: 400;
+
+  /* ---------- Colors ---------- */
+
+  --color-black-100: #787878;
+  --color-black-200: #6b6b6b;
+  --color-black-300: #5e5e5e;
+  --color-black-400: #525252;
+  --color-black-500: #454545;
+  --color-black-600: #373737;
+  --color-black-700: #2b2b2b;
+  --color-black-800: #1f1f1f;
+  --color-black-900: #121212;
+  --color-black-950: #050505;
+
+  --color-blue-100: #ffffff;
+  --color-blue-200: #eceff4;
+  --color-blue-300: #cbd3e1;
+  --color-blue-400: #abb8ce;
+  --color-blue-500: #8b9dbc;
+  --color-blue-600: #6a82a9;
+  --color-blue-700: #52698e;
+  --color-blue-800: #40516e;
+  --color-blue-900: #2d394e;
+  --color-blue-950: #1a212d;
+
+  --color-backgorund-100: #f5f7fa;
+
+  --color-error: #ff6577;
+
+  --color-gray-100: #dedede;
+  --color-gray-200: #c4c4c4;
+  --color-gray-300: #ababab;
+  --color-gray-400: #919191;
+
+  --color-line-100: #f2f2f2;
+  --color-line-200: #cfdbea;
+
+  --color-illustration-yellow: #fbc85b;
+  --color-illustration-green: #48bb98;
+  --color-illustration-purple: #8e80e3;
+  --color-illustration-blue: #5195ee;
+  --color-illustration-red: #e46e80;
+  --color-illustration-brown: #9a695e;
+
+  --color-sub-yellow: #e8aa26;
+  --color-sub-blue-1: #3e3e3e;
+  --color-sub-blue-2: #3e414d;
+  --color-sub-blue-3: #494d59;
+  --color-sub-gray-1: #c7d1e0;
+  --color-sub-gray-2: #e3e9f1;
+  --color-sub-gray-3: #eff3f8;
 }
 
 @media (prefers-color-scheme: dark) {
