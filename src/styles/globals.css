@@ -3,16 +3,27 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  font-family: 'pretendard';
+}
+
+@font-face {
+  font-family: 'Iropke Batang';
+  src:
+    url('../../public/fonts/IropkeBatangM.woff') format('woff'),
+    url('../../public/fonts/IropkeBatangM.otf') format('opentype');
+  font-display: swap;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Pretendard', sans;
   --font-mono: var(--font-geist-mono);
 }
 
 @theme {
+  --font-pre: pretendard;
+  --font-iro: 'Iropke Batang';
   /* 3xl */
   --text-3xl-b: 32px;
   --text-3xl-b--line-height: 42px;
@@ -128,6 +139,48 @@
   --text-xs-r: 12px;
   --text-xs-r--line-height: 18px;
   --text-xs-r--font-weight: 400;
+
+  /* ---------- Iropke Batang OTF ---------- */
+
+  /* 4xl */
+  --text-4xl-m: 40px;
+  --text-4xl-m--line-height: 52px;
+  --text-4xl-m--font-weight: 400;
+
+  /* 3xl */
+  --text-3xl-m: 32px;
+  --text-3xl-m--line-height: 48px;
+  --text-3xl-m--font-weight: 400;
+
+  /* 2xl */
+  --text-2xl-m: 24px;
+  --text-2xl-m--line-height: 40px;
+  --text-2xl-m--font-weight: 400;
+
+  /* xl */
+  --text-xl-m: 20px;
+  --text-xl-m--line-height: 28px;
+  --text-xl-m--font-weight: 400;
+
+  /* lg */
+  --text-lg-m: 16px;
+  --text-lg-m--line-height: 26px;
+  --text-lg-m--font-weight: 400;
+
+  /* md */
+  --text-md-m: 14px;
+  --text-md-m--line-height: 24px;
+  --text-md-m--font-weight: 400;
+
+  /* sm */
+  --text-sm-m: 13px;
+  --text-sm-m--line-height: 20px;
+  --text-sm-m--font-weight: 400;
+
+  /* xs */
+  --text-sm-m: 12px;
+  --text-sm-m--line-height: 18px;
+  --text-sm-m--font-weight: 400;
 }
 
 @media (prefers-color-scheme: dark) {
