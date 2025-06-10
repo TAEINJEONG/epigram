@@ -1,6 +1,7 @@
 import type { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 
 import NoteBg from '@/assets/images/note-bg.svg';
@@ -25,6 +26,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
 });
 
 const Home = () => {
+  const { ref: firstRef, inView: firstInView } = useInView({ threshold: 0.3 });
+  const { ref: secondRef, inView: secondInView } = useInView({
+    threshold: 0.3,
+  });
+  const { ref: thirdRef, inView: thirdInView } = useInView({ threshold: 0.3 });
   const { t } = useTranslation('home');
 
   return (
@@ -86,11 +92,16 @@ const Home = () => {
       <div className="px-6 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center xl:items-end xl:flex-row mb-[196px] md:mb-[220px] xl:mb-[380px]">
           <Image
+            ref={firstRef}
             src={landing1}
             alt="랜딩 첫 번째 이미지"
             width={312}
             height={209}
-            className="w-full mb-10 xl:mb-0 xl:mr-[80px] md:h-[240px] xl:h-[388px]"
+            className={`
+              w-full mb-10 xl:mb-0 xl:mr-[80px] md:h-[240px] xl:h-[388px] 
+              transform transition-all duration-500 ease-out 
+              ${firstInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}
+            `}
           />
 
           <div className="flex flex-col w-full text-left">
@@ -103,11 +114,16 @@ const Home = () => {
 
         <div className="flex flex-col justify-center items-center xl:items-end xl:flex-row-reverse mb-[196px] md:mb-[220px] xl:mb-[380px]">
           <Image
+            ref={secondRef}
             src={landing2}
             alt="랜딩 두 번째 이미지"
             width={312}
             height={209}
-            className="w-full mb-10 xl:mb-0 xl:ml-[80px] md:h-[240px] xl:h-[388px]"
+            className={`
+              w-full mb-10 xl:mb-0 xl:ml-[80px] md:h-[240px] xl:h-[388px]
+              transform transition-all duration-500 ease-out 
+              ${secondInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}
+            `}
           />
 
           <div className="flex flex-col justify-end items-end w-full text-right">
@@ -120,11 +136,16 @@ const Home = () => {
 
         <div className="flex flex-col justify-center items-center xl:items-end xl:flex-row mb-[196px] md:mb-[220px] xl:mb-[380px]">
           <Image
+            ref={thirdRef}
             src={landing3}
             alt="랜딩 세 번째 이미지"
             width={312}
             height={209}
-            className="w-full mb-10 xl:mb-0 xl:mr-[80px] md:h-[240px] xl:h-[388px]"
+            className={`
+              w-full mb-10 xl:mb-0 xl:mr-[80px] md:h-[240px] xl:h-[388px] 
+              transform transition-all duration-500 ease-out 
+              ${thirdInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}
+            `}
           />
 
           <div className="flex flex-col w-full text-left">
