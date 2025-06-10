@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
-import LocaleSwitcher from '@/components/localeSwitcher.jsx';
+import LocaleSwitcher from '@/components/localeSwitcher';
 
 const queryClient = new QueryClient();
 
