@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-export function LocaleSwitcher() {
+const LocaleSwitcher = () => {
   const { locale, locales, asPath, pathname, query, push } = useRouter();
   const supported = locales ?? ['ko', 'en'];
   const nextLocale = supported.find((l) => l !== locale) ?? supported[0];
@@ -17,4 +17,6 @@ export function LocaleSwitcher() {
       {nextLocale.toUpperCase()}
     </button>
   );
-}
+};
+
+export default LocaleSwitcher;
