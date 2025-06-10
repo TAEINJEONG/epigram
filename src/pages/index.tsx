@@ -18,6 +18,7 @@ import landing2 from '@/assets/images/img_Desktop_landing02.svg';
 import landing3 from '@/assets/images/img_Desktop_landing03.svg';
 import landing4 from '@/assets/images/img_Desktop_landing04.svg';
 import Button from '@/components/Button';
+import Link from 'next/link';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
@@ -53,7 +54,9 @@ const Home = () => {
               <p className="text-md-m md:text-xl-m font-iro text-black-300 mb-6 md:mb-8 lg:mb-12">
                 {t('sub-title')}
               </p>
-              <Button size="md">{t('start')}</Button>
+              <Link href="/login">
+                <Button size="md">{t('start')}</Button>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-center mb-[58px] animate-bounce">
@@ -209,7 +212,9 @@ const Home = () => {
           <br />
           에피그램
         </p>
-        <Button size="md">{t('start')}</Button>
+        <Link href="/login">
+          <Button size="md">{t('start')}</Button>
+        </Link>
       </div>
     </div>
   );
