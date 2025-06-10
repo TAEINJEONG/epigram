@@ -1,0 +1,17 @@
+<svg width="744" height="55" viewBox="0 0 744 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_0_6459)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M-68 32H372H812V24L792 17L772 24L752 17L732 24L712 17L692 24L672 17L652 24L632 17L612 24L592 17L572 24L552 17L532 24L512 17L492 24L472 17L452 24L432 17L412 24L392 17L372 24L352 17L332 24L312 17L292 24L272 17L252 24L232 17L212 24L192 17L172 24L152 17L132 24L112 17L92 24L72 17L52 24L32 17L12 24L-8 17L-28 24L-48 17L-68 24V32Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_0_6459" x="-88" y="0" width="920" height="55" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feGaussianBlur stdDeviation="10"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_6459"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_6459" result="shape"/>
+</filter>
+</defs>
+</svg>

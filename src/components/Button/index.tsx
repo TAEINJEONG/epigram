@@ -18,7 +18,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 const paddingStyles: Record<'xs' | 'sm' | 'md' | 'md2', string> = {
   xs: 'py-[6px] px-4 text-xs',
   sm: 'py-[9px] px-4 text-base',
-  md: 'py-[11px] px-7 text-base',
+  md: 'py-[11px] px-7 text-base lg:py-4 px-0 lg:w-[286px] lg:text-xl',
   md2: 'py-3 px-[33px] text-xl',
 };
 

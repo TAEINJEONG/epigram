@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import nextI18NextConfig from '../../next-i18next.config.js';
 import { appWithTranslation } from 'next-i18next';
+import { LocaleSwitcher } from '@/pages/localeSwitcher.tsx';
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <main className="font-pre">
         <Component {...pageProps} />
+        <div className="fixed bottom-10 right-10">
+          <LocaleSwitcher />
+        </div>
       </main>
       {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
