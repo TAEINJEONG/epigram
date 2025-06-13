@@ -1,0 +1,15 @@
+{
+  "email": "Email",
+  "requiredEmail": "Please enter your email.",
+  "emailValid": "Please enter a valid email address.",
+  "password": "Password",
+  "requiredPassword": "Please enter your password.",
+  "passwordMinLength": "Please enter at least 8 characters.",
+  "passwordConfirm": "Confirm Password",
+  "passwordNotMatch": "Passwords do not match.",
+  "nickName": "Nickname",
+  "requiredNickName": "Please enter your nickname.",
+  "nickNameMaxLength": "Please enter up to 30 characters.",
+  "signUp": "Sign Up",
+  "signingUp": "Signing up..."
+}

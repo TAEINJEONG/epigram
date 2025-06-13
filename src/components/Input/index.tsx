@@ -5,7 +5,7 @@ import inVisibleIcon from '@/assets/icon/visibility_off.svg';
 import { useState } from 'react';
 
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  value: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: string;
