@@ -1,0 +1,12 @@
+{
+  "email": "이메일",
+  "requiredEmail": "이메일을 입력해주세요.",
+  "emailValid": "유효한 이메일 형식이 아닙니다.",
+  "password": "비밀번호",
+  "requiredPassword": "비밀번호를 입력해주세요.",
+  "passwordMinLength": "최소 8자 이상 입력해주세요.",
+  "logging in": "로그인 중..",
+  "login": "로그인",
+  "notMember": "회원이 아니신가요?",
+  "signup": "회원가입"
+}

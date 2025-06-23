@@ -27,7 +27,7 @@ const Input = ({
       <div className="relative">
         <input
           className={classNames(
-            'rounded-[12px] bg-backgorund-100 outline-none w-full border border-blue-300',
+            'rounded-[12px] bg-[#F5F7FA] outline-none w-full border border-blue-300',
             'placeholder-blue-400 text-black-950 caret-blue-400',
             'py-[9px] px-[16px] text-lg-r',
             'lg:py-[16px] lg:text-xl-m',

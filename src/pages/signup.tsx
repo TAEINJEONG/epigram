@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useLogin } from '@/hooks/useLogin';
 
 type SignupForm = {
   email: string;
@@ -40,6 +41,7 @@ const SignUp = () => {
       passwordConfirmation: '',
     },
   });
+  const mutation = useLogin();
 
   // useMution으로 /auth/signUp api 응답 상태 정의
   const signUpMutation = useMutation({
@@ -48,8 +50,9 @@ const SignUp = () => {
       return result;
     },
 
-    onSuccess: () => {
+    onSuccess: (_result, variables) => {
       alert('회원가입이 완료되었습니다!');
+      mutation.mutate({ email: variables.email, password: variables.password });
     },
 
     onError: (error) => {
@@ -96,7 +99,7 @@ const SignUp = () => {
               placeholder={t('password')}
               {...register('password', {
                 required: t('requiredPassword'),
-                minLength: { value: 8, message: t('passwordminLength') },
+                minLength: { value: 8, message: t('passwordMinLength') },
               })}
               errorMessage={errors?.password?.message}
             />
