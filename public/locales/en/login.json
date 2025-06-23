@@ -1,0 +1,12 @@
+{
+  "email": "Email",
+  "requiredEmail": "Please enter your email.",
+  "emailValid": "Please enter a valid email address.",
+  "password": "Password",
+  "requiredPassword": "Please enter your password.",
+  "passwordMinLength": "Please enter at least 8 characters.",
+  "logging in": "logging in..",
+  "login": "login",
+  "notMember": "Not a member?",
+  "signup": "go To Sign Up"
+}
