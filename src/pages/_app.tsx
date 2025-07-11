@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
-import LocaleSwitcher from '@/components/localeSwitcher';
+import GlobalNavagationBar from '@/components/GNB/index';
 
 const queryClient = new QueryClient();
 
@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <GlobalNavagationBar />
       <AnimatePresence mode="wait">
         <motion.div
           key={router.asPath}
@@ -25,9 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <main className="font-pre">
             <Component {...pageProps} />
-            <div className="fixed bottom-10 right-10">
-              <LocaleSwitcher />
-            </div>
+            <div className="fixed bottom-10 right-10"></div>
           </main>
         </motion.div>
       </AnimatePresence>
