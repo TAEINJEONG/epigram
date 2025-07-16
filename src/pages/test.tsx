@@ -1,4 +1,13 @@
+import Emotion from '@/components/Emotion';
 import Feed from '@/components/Feed';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'ko', ['emotion'])),
+  },
+});
 
 const Test = () => {
   const feedDatas = [
@@ -17,6 +26,7 @@ const Test = () => {
           <Feed key={feed.id} feed={feed} />
         ))}
       </div>
+      <Emotion />
     </div>
   );
 };
