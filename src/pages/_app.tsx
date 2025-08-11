@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import GlobalNavagationBar from '@/components/GNB/index';
+import ModalRoot from '@/components/Modal/ModalRoot';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <main className="font-pre">
             <Component {...pageProps} />
+            <ModalRoot />
             <div className="fixed bottom-10 right-10"></div>
           </main>
         </motion.div>

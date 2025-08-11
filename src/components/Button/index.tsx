@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 
 type ButtonVariant = 'solid' | 'outlined';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'md2' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -11,8 +11,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  solid: 'bg-[#454545] hover:bg-[#373737] active:bg-[#2B2B2B]',
-  outlined: 'border border-[#454545] hover:border-[#373737] active:border-[#2B2B2B]',
+  solid: 'bg-[#454545] hover:bg-[#373737] active:bg-[#2B2B2B] cursor-pointer',
+  outlined: 'border border-[#454545] hover:border-[#373737] active:border-[#2B2B2B] cursor-pointer',
 };
 
 const paddingStyles: Record<'xs' | 'sm' | 'md' | 'md2', string> = {
@@ -43,12 +43,11 @@ const Button = ({
 
   return (
     <button
-      className={classNames(
-        'rounded-[12px] cursor-pointer text-white font-semibold',
+      className={cn(
+        'text-white inline-flex items-center justify-center rounded-[12px] font-semibold transition-colors',
+        'disabled:cursor-not-allowed disabled:bg-[#CBD3E1]',
         sizeClass,
-        className,
-
-        disabled ? 'bg-[#CBD3E1]' : variantStyles[variant],
+        variantStyles[variant],
         className,
       )}
       disabled={disabled}

@@ -5,6 +5,7 @@ import more from '@/assets/icon/more-icon.svg';
 import Image from 'next/image';
 import useSWR from 'swr';
 import { CommentResponse } from '@/type/Comment';
+import { Me } from '@/type/me';
 
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -24,12 +25,20 @@ const fetchCommentsApi = async () => {
   return data;
 };
 
+const fetchMeApi = async () => {
+  const { data } = await axiosInstance.get<Me>('/users/me');
+  return data;
+};
+
 const Main = () => {
   const { data: comments } = useSWR(
     '/comments',
     fetchCommentsApi,
     { refreshInterval: 60000 }, // 60초마다 자동 재요청
   );
+  const { data: me } = useSWR('/user/me', fetchMeApi, {
+    revalidateOnFocus: false,
+  });
 
   const FeedData = {
     id: 1,
@@ -62,7 +71,7 @@ const Main = () => {
 
   return (
     <div className="flex justify-center py-30">
-      <div className="max-w-[640px] px-6">
+      <div className="md:max-w-[432px] lg:max-w-[688px] px-6">
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">오늘의 에피그램</p>
           <Feed feed={FeedData} />
@@ -93,7 +102,11 @@ const Main = () => {
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">최신 댓글</p>
-          {comments?.list?.map((comment) => <Comment key={comment?.id} Comment={comment} />)}
+          <div className="-mx-6">
+            {comments?.list?.map((comment) => (
+              <Comment key={comment?.id} Comment={comment} me={me} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
