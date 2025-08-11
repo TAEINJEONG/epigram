@@ -1,10 +1,14 @@
 import Emotion from '@/components/Emotion';
 import Feed from '@/components/Feed';
+import Comment from '@/components/Comment';
 import more from '@/assets/icon/more-icon.svg';
 import Image from 'next/image';
+import useSWR from 'swr';
+import { CommentResponse } from '@/type/Comment';
 
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import axiosInstance from '@/api/axiosInstance';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
@@ -12,7 +16,21 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   },
 });
 
+const fetchCommentsApi = async () => {
+  const { data } = await axiosInstance.get<CommentResponse>('/comments', {
+    params: { limit: 5 },
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return data;
+};
+
 const Main = () => {
+  const { data: comments } = useSWR(
+    '/comments',
+    fetchCommentsApi,
+    { refreshInterval: 60000 }, // 60초마다 자동 재요청
+  );
+
   const FeedData = {
     id: 1,
     feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
@@ -75,6 +93,7 @@ const Main = () => {
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">최신 댓글</p>
+          {comments?.list?.map((comment) => <Comment key={comment?.id} Comment={comment} />)}
         </div>
       </div>
     </div>
