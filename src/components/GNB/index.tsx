@@ -18,9 +18,9 @@ const GlobalNavagationBar = () => {
   return (
     <div
       className="
-      flex sticky top-0 w-full
+      flex fixed inset-x-0 top-0 w-full
       px-[24px] md:px-[72px] lg:px-[120px]
-      py-[13px] md:py-[18px] lg:py-[22px]
+      h-[52px] py-[13px] md:h-[60px] md:py-[18px] lg:py-[22px]
       border-b border-[#D7D7D7] bg-[#ffffff] z-999"
     >
       <div className="flex items-center justify-between w-full">

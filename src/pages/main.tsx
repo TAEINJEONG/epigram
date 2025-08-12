@@ -77,8 +77,6 @@ const Main = () => {
   const latestFeeds = feedPages?.flatMap((p) => p.list) ?? [];
   const reachedEnd = feedPages ? feedPages[feedPages.length - 1]?.nextCursor == null : false;
 
-  // const { data: comments } = useSWR('/comments', fetchCommentsApi, { refreshInterval: 120000 });
-
   const {
     data: commentPages,
     size: commentSize,
@@ -98,7 +96,7 @@ const Main = () => {
   });
 
   return (
-    <div className="flex justify-center py-30">
+    <div className="flex justify-center py-21 sm:py-23 lg:py-47">
       <div className="md:max-w-[432px] lg:max-w-[688px] px-6">
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">오늘의 에피그램</p>
