@@ -3,12 +3,12 @@ import alertIcon from '@/assets/icon/alert-icon.svg';
 import Image from 'next/image';
 import Button from '../Button';
 
-export default function ConfirmDialog({
+const ConfirmDialog = ({
   title = '댓글을 삭제하시겠어요?',
   message = '댓글은 삭제 후 복구할 수 없어요.',
   okText = '삭제하기',
   cancelText = '취소',
-}: ConfirmProps) {
+}: ConfirmProps) => {
   const { resolve } = useModalStore();
   return (
     <div>
@@ -17,19 +17,21 @@ export default function ConfirmDialog({
         <h2 className="mb-1 text-lg-sb text-black-700">{title}</h2>
         <p className="mb-6 text-md-r text-gray-400">{message}</p>
       </div>
-      <div className="flex justify-end gap-3">
+      <div className="flex gap-3">
         <Button
           size="md"
-          className="bg-blue-200 hover:bg-blue-200 active:bg-blue-200 text-black-700 mx-2"
+          className="bg-blue-200 hover:bg-blue-200 active:bg-blue-200 text-black-700 mx-2 w-1/2"
           onClick={() => resolve(false)}
         >
           {cancelText}
         </Button>
 
-        <Button size="md" className="mx-2" onClick={() => resolve(false)}>
+        <Button size="md" className="mx-2 w-1/2" onClick={() => resolve(true)}>
           {okText}
         </Button>
       </div>
     </div>
   );
-}
+};
+
+export default ConfirmDialog;

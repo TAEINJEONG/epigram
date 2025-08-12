@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useModalStore } from '@/store/modalStore';
 import ConfirmDialog from './ConfirmDialog';
 import ProfileModal from './ProfileModal';
+import AlertDialog from './AlertDialog';
 
-export default function ModalRoot() {
+const ModalRoot = () => {
   const { current, close } = useModalStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-  // ESC & 스크롤 락
+
   useEffect(() => {
     if (!current) return;
     const prev = document.body.style.overflow;
@@ -24,12 +25,20 @@ export default function ModalRoot() {
 
   if (!mounted || !current) return null;
 
-  const panel =
-    current.type === 'confirm' ? (
-      <ConfirmDialog {...current.props} />
-    ) : (
-      <ProfileModal {...current.props} />
-    );
+  let panel: React.ReactNode;
+  switch (current.type) {
+    case 'confirm':
+      panel = <ConfirmDialog {...current.props} />;
+      break;
+    case 'alert':
+      panel = <AlertDialog {...current.props} />;
+      break;
+    case 'profile':
+      panel = <ProfileModal {...current.props} />;
+      break;
+    default:
+      return null;
+  }
 
   return createPortal(
     <div className="fixed inset-0 z-[1000] flex items-center justify-center">
@@ -45,4 +54,6 @@ export default function ModalRoot() {
     </div>,
     document.body,
   );
-}
+};
+
+export default ModalRoot;

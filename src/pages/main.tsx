@@ -5,6 +5,7 @@ import more from '@/assets/icon/more-icon.svg';
 import Image from 'next/image';
 import useSWR from 'swr';
 import { CommentResponse } from '@/type/Comment';
+import { Epigram } from '@/type/feed';
 import { Me } from '@/type/me';
 
 import { GetStaticProps } from 'next';
@@ -16,6 +17,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale ?? 'ko', ['emotion'])),
   },
 });
+
+const fetchFeedApi = async () => {
+  const { data } = await axiosInstance.get<Epigram>('/epigrams/today');
+  return data;
+};
 
 const fetchCommentsApi = async () => {
   const { data } = await axiosInstance.get<CommentResponse>('/comments', {
@@ -31,6 +37,7 @@ const fetchMeApi = async () => {
 };
 
 const Main = () => {
+  const { data: feed } = useSWR('/epigrams/today', fetchFeedApi, { revalidateOnFocus: false });
   const { data: comments } = useSWR(
     '/comments',
     fetchCommentsApi,
@@ -40,12 +47,12 @@ const Main = () => {
     revalidateOnFocus: false,
   });
 
-  const FeedData = {
-    id: 1,
-    feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
-    author: '앙드레 말로',
-    tag: ['나아가야할떄', '꿈을이루고싶을때'],
-  };
+  // const FeedData = {
+  //   id: 1,
+  //   feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
+  //   author: '앙드레 말로',
+  //   tag: ['나아가야할떄', '꿈을이루고싶을때'],
+  // };
 
   const lastestsFeedData = [
     {
@@ -74,7 +81,7 @@ const Main = () => {
       <div className="md:max-w-[432px] lg:max-w-[688px] px-6">
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">오늘의 에피그램</p>
-          <Feed feed={FeedData} />
+          <Feed feed={feed} />
         </div>
 
         <div className="pb-35">

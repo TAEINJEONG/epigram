@@ -18,7 +18,7 @@ const ProfileModal = ({ nickname, image }: ProfileProps) => {
             alt={`${nickname} 프로필`}
             width={44}
             height={44}
-            className="rounded-full object-cover"
+            className="rounded-full object-cover aspect-square"
           />
         ) : (
           <div className="h-11 w-11 rounded-full overflow-hidden flex items-end justify-center bg-blue-200">

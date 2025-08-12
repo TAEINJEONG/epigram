@@ -20,7 +20,7 @@ const Comment = ({ Comment, me }: Props) => {
   const ago = dayjs(Comment.createdAt).fromNow();
   const canManage = me?.id === Comment.writer.id;
 
-  const { open, confirm } = useModalStore();
+  const { open, confirm, showAlert } = useModalStore();
   const { mutate } = useSWRConfig();
 
   const openProfile = () =>
@@ -36,11 +36,15 @@ const Comment = ({ Comment, me }: Props) => {
       message: '댓글은 삭제 후 복구할 수 없어요.',
       okText: '삭제하기',
       cancelText: '취소',
-      danger: true,
     });
     if (!ok) return;
     await axiosInstance.delete(`/comments/${Comment.id}`);
     mutate('/comments');
+
+    await showAlert({
+      title: '댓글을 삭제했어요',
+      okText: '확인',
+    });
   };
 
   return (
@@ -78,7 +82,10 @@ const Comment = ({ Comment, me }: Props) => {
           {canManage && (
             <div className="text-xs-r md:text-md-r xl:text-lg-r">
               <button className="mr-4 underline underline-offset-0 text-black-600">수정</button>
-              <button onClick={handleDelete} className="underline underline-offset-0 text-error">
+              <button
+                onClick={handleDelete}
+                className="underline underline-offset-0 text-error cursor-pointer"
+              >
                 삭제
               </button>
             </div>
