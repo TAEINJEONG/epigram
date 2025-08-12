@@ -58,14 +58,6 @@ const getCommentsKey = (index: number, prev: CommentResponse | null) => {
   return `/comments?${params.toString()}`;
 };
 
-const fetchCommentsApi = async () => {
-  const { data } = await axiosInstance.get<CommentResponse>('/comments', {
-    params: { limit: 5 },
-    headers: { 'Content-Type': 'application/json' },
-  });
-  return data;
-};
-
 const fetchMeApi = async () => {
   const { data } = await axiosInstance.get<Me>('/users/me');
   return data;
