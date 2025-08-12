@@ -15,7 +15,7 @@ export interface Epigram {
   author: string;
   writerId: number;
   likeCount: number;
-  isLiked: boolean;
+  isLiked?: boolean;
   tags: Tag[];
   referenceUrl: string;
   referenceTitle: string;

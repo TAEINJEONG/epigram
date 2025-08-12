@@ -7,10 +7,12 @@ import useSWR from 'swr';
 import { CommentResponse } from '@/type/Comment';
 import { Epigram } from '@/type/feed';
 import { Me } from '@/type/me';
+import useSWRInfinite from 'swr/infinite';
 
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import axiosInstance from '@/api/axiosInstance';
+import { EpigramListResponse } from '@/type/EpigramList';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
@@ -21,6 +23,39 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
 const fetchFeedApi = async () => {
   const { data } = await axiosInstance.get<Epigram>('/epigrams/today');
   return data;
+};
+
+const PAGE_SIZE = 5;
+
+const feedsFetcher = (url: string) =>
+  axiosInstance.get<EpigramListResponse>(url).then((r) => r.data);
+
+const getFeedsKey = (index: number, prev: EpigramListResponse | null) => {
+  // 직전 페이지의 nextCursor가 null이면 종료
+  if (prev && prev.nextCursor == null) return null;
+
+  const params = new URLSearchParams();
+  params.set('limit', String(PAGE_SIZE));
+
+  const cursor = index === 0 ? undefined : prev?.nextCursor;
+  if (cursor != null) params.set('cursor', String(cursor));
+
+  return `/epigrams?${params.toString()}`;
+};
+
+const commentsFetcher = (url: string) =>
+  axiosInstance.get<CommentResponse>(url).then((r) => r.data);
+
+const getCommentsKey = (index: number, prev: CommentResponse | null) => {
+  if (prev && prev.nextCursor == null) return null;
+
+  const params = new URLSearchParams();
+  params.set('limit', String(PAGE_SIZE));
+
+  const cursor = index === 0 ? undefined : prev?.nextCursor;
+  if (cursor != null) params.set('cursor', String(cursor));
+
+  return `/comments?${params.toString()}`;
 };
 
 const fetchCommentsApi = async () => {
@@ -38,50 +73,44 @@ const fetchMeApi = async () => {
 
 const Main = () => {
   const { data: feed } = useSWR('/epigrams/today', fetchFeedApi, { revalidateOnFocus: false });
-  const { data: comments } = useSWR(
-    '/comments',
-    fetchCommentsApi,
-    { refreshInterval: 60000 }, // 60초마다 자동 재요청
-  );
+  const {
+    data: feedPages,
+    size,
+    setSize,
+    isValidating,
+  } = useSWRInfinite<EpigramListResponse>(getFeedsKey, feedsFetcher, {
+    revalidateFirstPage: false,
+  });
+
+  const latestFeeds = feedPages?.flatMap((p) => p.list) ?? [];
+  const reachedEnd = feedPages ? feedPages[feedPages.length - 1]?.nextCursor == null : false;
+
+  // const { data: comments } = useSWR('/comments', fetchCommentsApi, { refreshInterval: 120000 });
+
+  const {
+    data: commentPages,
+    size: commentSize,
+    setSize: setCommentSize,
+    isValidating: isCommentValidating,
+  } = useSWRInfinite<CommentResponse>(getCommentsKey, commentsFetcher, {
+    revalidateFirstPage: false,
+  });
+
+  const latestComments = commentPages?.flatMap((c) => c.list) ?? [];
+  const commentReachedEnd = commentPages
+    ? commentPages[commentPages.length - 1]?.nextCursor == null
+    : false;
+
   const { data: me } = useSWR('/user/me', fetchMeApi, {
     revalidateOnFocus: false,
   });
-
-  // const FeedData = {
-  //   id: 1,
-  //   feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
-  //   author: '앙드레 말로',
-  //   tag: ['나아가야할떄', '꿈을이루고싶을때'],
-  // };
-
-  const lastestsFeedData = [
-    {
-      id: 1,
-      feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
-      author: '앙드레 말로',
-      tag: ['나아가야할떄', '꿈을이루고싶을때'],
-    },
-    {
-      id: 2,
-      feedText:
-        '이 세상에는 위대한 진실이 하나 있어. 무언가를 온 마음을 다해 원한다면, 반드시 그렇게 된다는 거야. 무언가를 바라는 마음은 곧 우주의 마음으로부터 비롯된 것이기 때문이지. ',
-      author: '파울로 코엘료',
-      tag: ['나아가야할떄', '꿈을이루고싶을때'],
-    },
-    {
-      id: 3,
-      feedText: '오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.',
-      author: '앙드레 말로',
-      tag: ['나아가야할떄', '꿈을이루고싶을때'],
-    },
-  ];
 
   return (
     <div className="flex justify-center py-30">
       <div className="md:max-w-[432px] lg:max-w-[688px] px-6">
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">오늘의 에피그램</p>
-          <Feed feed={feed} />
+          {feed ? <Feed feed={feed} /> : null}
         </div>
 
         <div className="pb-35">
@@ -93,26 +122,50 @@ const Main = () => {
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">최신 에피그램</p>
-          {lastestsFeedData.map((feed) => (
-            <Feed key={feed.id} feed={feed} />
+
+          {latestFeeds.map((f) => (
+            <div className="pb-4" key={f.id}>
+              <Feed feed={f} />
+            </div>
           ))}
 
           <div className="w-full flex justify-center pt-[72px]">
-            <button className="flex items-center border py-3 px-10 border-line-200 rounded-[100px] cursor-pointer">
-              <Image src={more} className="mr-2" alt="더보기 아이콘" />
-              <span className="text-md-m lg:text-xl-m lg:font-medium text-blue-500">
-                에피그램 더보기
-              </span>
-            </button>
+            {!reachedEnd && (
+              <button
+                className="flex items-center border py-3 px-10 border-line-200 rounded-[100px] cursor-pointer disabled:opacity-50"
+                onClick={() => setSize(size + 1)}
+                disabled={isValidating || reachedEnd}
+              >
+                <Image src={more} className="mr-2" alt="더보기 아이콘" />
+                <span className="text-md-m lg:text-xl-m lg:font-medium text-blue-500">
+                  {isValidating ? '불러오는 중…' : '에피그램 더보기'}
+                </span>
+              </button>
+            )}
           </div>
         </div>
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">최신 댓글</p>
           <div className="-mx-6">
-            {comments?.list?.map((comment) => (
+            {latestComments?.map((comment) => (
               <Comment key={comment?.id} Comment={comment} me={me} />
             ))}
+          </div>
+
+          <div className="w-full flex justify-center pt-[72px]">
+            {!commentReachedEnd && (
+              <button
+                className="flex items-center border py-3 px-10 border-line-200 rounded-[100px] cursor-pointer disabled:opacity-50"
+                onClick={() => setCommentSize(commentSize + 1)}
+                disabled={isCommentValidating || commentReachedEnd}
+              >
+                <Image src={more} className="mr-2" alt="더보기 아이콘" />
+                <span className="text-md-m lg:text-xl-m lg:font-medium text-blue-500">
+                  {isCommentValidating ? '불러오는 중…' : '최신 댓글 더보기'}
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </div>
