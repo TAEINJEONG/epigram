@@ -9,7 +9,7 @@ const Feed = ({ feed }: feedProps) => {
   return (
     <div className="font-iro">
       <div
-        className="py-[21px] px-[22px] shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)] rounded-[16px]"
+        className="py-[21px] px-[22px] shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)] rounded-[16px] bg-blue-100"
         style={{ backgroundImage: `url(${noteBg?.src ?? noteBg})` }}
       >
         <p>{feed?.content}</p>
