@@ -8,11 +8,22 @@ import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import GlobalNavagationBar from '@/components/GNB/index';
 import ModalRoot from '@/components/Modal/ModalRoot';
-
-const queryClient = new QueryClient();
+import { useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 30, // 30s
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
