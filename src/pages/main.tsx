@@ -74,7 +74,7 @@ const Main = () => {
                 onClick={() => fetchEpigramNextPage()}
                 disabled={isFetchingEpigramNextPage}
               >
-                <Image src={more} className="mr-2" alt={t('more_icon')} />
+                <Image src={more} className="mr-2" alt={t('more_icon')} aria-hidden="true" />
                 <span className="text-md-m lg:text-xl-m lg:font-medium text-blue-500">
                   {isFetchingEpigramNextPage ? t('loading') : t('more')}
                 </span>
@@ -98,7 +98,7 @@ const Main = () => {
                 onClick={() => fetchCommentNextPage()}
                 disabled={isFetchingCommentPage}
               >
-                <Image src={more} className="mr-2" alt={t('more_icon')} />
+                <Image src={more} className="mr-2" alt={t('more_icon')} aria-hidden="true" />
                 <span className="text-md-m lg:text-xl-m lg:font-medium text-blue-500">
                   {isFetchingCommentPage ? t('loading') : t('more_comment')}
                 </span>
@@ -116,14 +116,22 @@ const Main = () => {
           bg-blue-900 rounded-[100px] text-blue-100
           "
         >
-          <Image src={epigramMore} alt={t('create')} width={24} height={24} className="mr-1" />
+          <Image
+            src={epigramMore}
+            alt={t('create')}
+            width={24}
+            height={24}
+            className="mr-1"
+            aria-hidden="true"
+          />
           {t('create')}
         </button>
         <button
           className="flex justify-center items-center w-16 h-16 bg-blue-900 rounded-full text-blue-100"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label={t('top')}
         >
-          <Image src={topArrow} alt={t('top')} width={22} height={12} />
+          <Image src={topArrow} alt={t('top')} aria-hidden="true" width={22} height={12} />
         </button>
       </div>
     </div>
