@@ -1,0 +1,13 @@
+{
+  "confirm_title": "댓글을 삭제하시겠어요?",
+  "confirm_body": "댓글은 삭제 후 복구할 수 없어요.",
+  "cancel": "취소",
+  "delete": "삭제",
+  "delete_action": "삭제하기",
+  "edit": "수정",
+  "comment_deleted": "댓글을 삭제했어요",
+  "confirm": "확인",
+  "view_author_profile": "작성자 프로필 보기",
+  "profile": "프로필",
+  "user_icon": "사용자 아이콘"
+}

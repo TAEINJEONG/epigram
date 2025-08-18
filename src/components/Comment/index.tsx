@@ -7,10 +7,13 @@ import userIcon from '@/assets/icon/user-icon.svg';
 import { useModalStore } from '@/store/modalStore';
 import axiosInstance from '@/api/axiosInstance';
 import { useSWRConfig } from 'swr';
+import { useTranslation } from 'next-i18next';
 
 type Props = { Comment: CommentModel; me?: Me };
 
 const Comment = ({ Comment, me }: Props) => {
+  const { t } = useTranslation('comment');
+
   const [, setNow] = useState(Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 60_000);
@@ -32,18 +35,18 @@ const Comment = ({ Comment, me }: Props) => {
 
   const handleDelete = async () => {
     const ok = await confirm({
-      title: '댓글을 삭제하시겠어요?',
-      message: '댓글은 삭제 후 복구할 수 없어요.',
-      okText: '삭제하기',
-      cancelText: '취소',
+      title: t('confirm_title'),
+      message: t('confirm_body'),
+      okText: t('delete_action'),
+      cancelText: t('cancel'),
     });
     if (!ok) return;
     await axiosInstance.delete(`/comments/${Comment.id}`);
     mutate('/comments');
 
     await showAlert({
-      title: '댓글을 삭제했어요',
-      okText: '확인',
+      title: t('comment_deleted'),
+      okText: t('confirm'),
     });
   };
 
@@ -53,18 +56,18 @@ const Comment = ({ Comment, me }: Props) => {
         type="button"
         onClick={openProfile}
         className="mr-4 h-12 w-12 rounded-full overflow-hidden flex items-end justify-center bg-blue-200"
-        aria-label="작성자 프로필 보기"
+        aria-label={t('view_author_profile')}
       >
         {Comment.writer.image ? (
           <Image
             src={Comment.writer.image}
-            alt={`${Comment.writer.nickname} 프로필`}
+            alt={`${Comment.writer.nickname}` + t('profile')}
             width={48}
             height={48}
             className="h-12 w-12 object-cover"
           />
         ) : (
-          <Image src={userIcon} alt="사용자 아이콘" width={32} height={32} />
+          <Image src={userIcon} alt={t('user_icon')} width={32} height={32} />
         )}
       </button>
 
@@ -81,12 +84,14 @@ const Comment = ({ Comment, me }: Props) => {
 
           {canManage && (
             <div className="text-xs-r md:text-md-r xl:text-lg-r">
-              <button className="mr-4 underline underline-offset-0 text-black-600">수정</button>
+              <button className="mr-4 underline underline-offset-0 text-black-600">
+                {t('edit')}
+              </button>
               <button
                 onClick={handleDelete}
                 className="underline underline-offset-0 text-error cursor-pointer"
               >
-                삭제
+                {t('delete')}
               </button>
             </div>
           )}
