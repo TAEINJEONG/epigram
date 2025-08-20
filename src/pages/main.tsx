@@ -23,6 +23,8 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { listEpigrams } from '@/services/epigrams';
 import { listComments } from '@/services/comments';
 
+import { i18nHealthCheck } from '@/lib/test.js';
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const qc = new QueryClient();
 
@@ -88,6 +90,7 @@ const Main = () => {
 
   return (
     <div className="flex justify-center py-21 sm:py-23 lg:py-47">
+      <pre data-testid="i18n-diag">{JSON.stringify(i18nDiag, null, 2)}</pre>
       <div className="md:max-w-[432px] lg:max-w-[688px] px-6">
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">{t('today')}</p>
