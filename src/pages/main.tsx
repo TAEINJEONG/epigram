@@ -9,6 +9,7 @@ import topArrow from '@/assets/icon/top-arrow-icon.svg';
 
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import nextI18NextConfig from '../../next-i18next.config.js';
 import { useTranslation } from 'next-i18next';
 import { useTodayEpigram } from '@/hooks/useTodayEpigram';
 import { useInfiniteEpigrams } from '@/hooks/useEpigrams';
@@ -41,7 +42,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'])),
+      ...(await serverSideTranslations(
+        locale ?? 'ko',
+        ['emotion', 'main', 'comment'],
+        nextI18NextConfig,
+      )),
       dehydratedState: dehydrate(qc),
     },
     revalidate: 60,
