@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { AnimatePresence, motion } from 'framer-motion';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
@@ -37,9 +37,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           transition={{ duration: 0.25 }}
         >
           <main className="font-pre">
-            <Component {...pageProps.dehydratedState} />
-            <ModalRoot />
-            <div className="fixed bottom-10 right-10"></div>
+            <HydrationBoundary state={pageProps.dehydratedState}>
+              <Component {...pageProps} />
+              <ModalRoot />
+              <div className="fixed bottom-10 right-10"></div>
+            </HydrationBoundary>
           </main>
         </motion.div>
       </AnimatePresence>
