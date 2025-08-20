@@ -3,6 +3,12 @@ module.exports = {
     locales: ['ko', 'en'],
     defaultLocale: 'ko',
   },
-  reloadOnPrerender: process.env.NODE_ENV === 'development',
+  reloadOnPrerender: true,
   localePath: './public/locales',
+  fallbackLng: {
+    default: ['ko'],
+  },
+  interpolation: {
+    escapeValue: false,
+  },
 };
