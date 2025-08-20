@@ -14,24 +14,63 @@ import { useTodayEpigram } from '@/hooks/useTodayEpigram';
 import { useInfiniteEpigrams } from '@/hooks/useEpigrams';
 import { useInfiniteComments } from '@/hooks/useComments';
 import { useMe } from '@/hooks/useMe';
+import FeedSkeleton from '@/components/Feed/FeedSkeleton';
+import CommentSkeleton from '@/components/Comment/CommentSkeleton';
+import { useTodayEmotion } from '@/hooks/useEmotion';
+import { QUERY_KEYS } from '@/lib/QUERY_KEYS';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { listEpigrams } from '@/services/epigrams';
+import { listComments } from '@/services/comments';
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'])),
-  },
-});
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const qc = new QueryClient();
+
+  await qc.prefetchInfiniteQuery({
+    queryKey: QUERY_KEYS.epigrams(5),
+    queryFn: ({ pageParam }) =>
+      listEpigrams({ cursor: pageParam === null ? undefined : (pageParam as number), limit: 5 }),
+    initialPageParam: null,
+  });
+
+  await qc.prefetchInfiniteQuery({
+    queryKey: QUERY_KEYS.comments(5),
+    queryFn: ({ pageParam }) =>
+      listComments({ cursor: pageParam === null ? undefined : (pageParam as number), limit: 5 }),
+    initialPageParam: null,
+  });
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'])),
+      dehydratedState: dehydrate(qc),
+    },
+    revalidate: 60,
+  };
+};
 
 const Main = () => {
   const { t } = useTranslation('main');
 
+  const { data: me } = useMe();
+  const userReady = typeof me?.id === 'number' && me.id > 0;
+
   const { data: epigram } = useTodayEpigram();
+  const {
+    data: hasPicked,
+    isSuccess,
+    pickEmotion,
+  } = useTodayEmotion(userReady ? me.id : undefined);
+
+  const shouldShowPicker = userReady && isSuccess && !hasPicked;
+
   const {
     list: latestFeeds,
     hasNextPage: hasMoreEpigrams,
     fetchNextPage: fetchEpigramNextPage,
     isFetchingNextPage: isFetchingEpigramNextPage,
     reachedEnd: noMoreEpigrams,
-  } = useInfiniteEpigrams();
+    isLoading: isEpigramsLoading,
+  } = useInfiniteEpigrams(5);
 
   const {
     list: latestComments,
@@ -39,9 +78,8 @@ const Main = () => {
     fetchNextPage: fetchCommentNextPage,
     isFetchingNextPage: isFetchingCommentPage,
     reachedEnd: noMoreComments,
-  } = useInfiniteComments();
-
-  const { data: me } = useMe();
+    isLoading: isCommentsLoading,
+  } = useInfiniteComments(5);
 
   return (
     <div className="flex justify-center py-21 sm:py-23 lg:py-47">
@@ -51,21 +89,36 @@ const Main = () => {
           {epigram ? <Feed feed={epigram} /> : null}
         </div>
 
-        <div className="pb-35">
-          <p className="pb-6 text-lg-sb lg:text-2xl-sb">{t('today_question')}</p>
-          <div className="flex justify-center">
-            <Emotion />
+        {shouldShowPicker ? (
+          <div className="pb-35">
+            <p className="pb-6 text-lg-sb lg:text-2xl-sb">{t('today_question')}</p>
+            <div className="flex justify-center">
+              <Emotion onPick={pickEmotion} />
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">{t('latest')}</p>
 
-          {latestFeeds.map((f) => (
-            <div className="pb-4" key={f.id}>
-              <Feed feed={f} />
-            </div>
-          ))}
+          {isEpigramsLoading
+            ? [1, 2, 3, 4, 5].map((index) => (
+                <div className="pb-4" key={index}>
+                  <FeedSkeleton />
+                </div>
+              ))
+            : latestFeeds.map((f) => (
+                <div className="pb-4" key={f.id}>
+                  <Feed feed={f} />
+                </div>
+              ))}
+
+          {isFetchingEpigramNextPage &&
+            [1, 2, 3, 4, 5].map((index) => (
+              <div className="pb-4" key={index}>
+                <FeedSkeleton />
+              </div>
+            ))}
 
           <div className="w-full flex justify-center pt-[72px]">
             {hasMoreEpigrams && !noMoreEpigrams && (
@@ -85,10 +138,24 @@ const Main = () => {
 
         <div className="pb-35">
           <p className="pb-6 text-lg-sb lg:text-2xl-sb">{t('latest_comment')}</p>
-          <div className="-mx-6">
-            {latestComments?.map((comment) => (
-              <Comment key={comment?.id} Comment={comment} me={me} />
-            ))}
+
+          <div className="w-full">
+            {isCommentsLoading
+              ? [1, 2, 3, 4, 5].map((index) => (
+                  <div className="pb-4" key={index}>
+                    <CommentSkeleton />
+                  </div>
+                ))
+              : latestComments?.map((comment) => (
+                  <Comment key={comment?.id} Comment={comment} me={me} />
+                ))}
+
+            {isFetchingCommentPage &&
+              [1, 2, 3, 4, 5].map((index) => (
+                <div className="pb-4" key={index}>
+                  <CommentSkeleton />
+                </div>
+              ))}
           </div>
 
           <div className="w-full flex justify-center pt-[72px]">

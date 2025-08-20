@@ -152,6 +152,6 @@ describe('<Main />', () => {
     });
     render(<Main />);
     // “more” 버튼이 없어야 함
-    expect(screen.queryByRole('button', { name: /^more$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^more$ㅈ/i })).not.toBeInTheDocument();
   });
 });

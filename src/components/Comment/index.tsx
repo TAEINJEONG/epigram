@@ -51,7 +51,7 @@ const Comment = ({ Comment, me }: Props) => {
   };
 
   return (
-    <div className="flex py-4 px-6 md:py-6 xl:py-[35px] w-full max-w-[640px] border-t border-t-line-200">
+    <div className="flex -mx-6 md:-mx-0 py-4 px-6 md:py-6 xl:py-[35px] w-screen md:w-full border-t border-t-line-200">
       <button
         type="button"
         onClick={openProfile}
