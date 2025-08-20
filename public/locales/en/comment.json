@@ -1,0 +1,13 @@
+{
+  "confirm_title": "Delete this comment?",
+  "confirm_body": "Comments cannot be restored after deletion.",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "delete_action": "Delete",
+  "edit": "Edit",
+  "comment_deleted": "Comment deleted",
+  "confirm": "OK",
+  "view_author_profile": "View author's profile",
+  "profile": "Profile",
+  "user_icon": "User icon"
+}

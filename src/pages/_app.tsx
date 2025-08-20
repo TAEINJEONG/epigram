@@ -7,11 +7,23 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import GlobalNavagationBar from '@/components/GNB/index';
-
-const queryClient = new QueryClient();
+import ModalRoot from '@/components/Modal/ModalRoot';
+import { useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 30, // 30s
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -25,7 +37,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           transition={{ duration: 0.25 }}
         >
           <main className="font-pre">
-            <Component {...pageProps} />
+            <Component {...pageProps.dehydratedState} />
+            <ModalRoot />
             <div className="fixed bottom-10 right-10"></div>
           </main>
         </motion.div>
