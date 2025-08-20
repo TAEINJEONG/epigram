@@ -42,11 +42,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(
-        locale ?? 'ko',
-        ['emotion', 'main', 'comment'],
-        nextI18NextConfig,
-      )),
+      ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'], {
+        ...nextI18NextConfig,
+        reloadOnPrerender: true,
+      })),
       dehydratedState: dehydrate(qc),
     },
     revalidate: 60,
