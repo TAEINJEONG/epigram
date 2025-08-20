@@ -7,7 +7,7 @@ import more from '@/assets/icon/more-icon.svg';
 import epigramMore from '@/assets/icon/epigram-more-icon.svg';
 import topArrow from '@/assets/icon/top-arrow-icon.svg';
 
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import { useTranslation } from 'next-i18next';
@@ -23,7 +23,7 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { listEpigrams } from '@/services/epigrams';
 import { listComments } from '@/services/comments';
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const qc = new QueryClient();
 
   await qc.prefetchInfiniteQuery({
@@ -48,7 +48,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       })),
       dehydratedState: dehydrate(qc),
     },
-    revalidate: 60,
   };
 };
 
