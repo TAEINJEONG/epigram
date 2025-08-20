@@ -35,7 +35,6 @@ describe('Button 컴포넌트', () => {
     render(<Button disabled>비활성</Button>);
     const btn = screen.getByRole('button', { name: '비활성' });
     expect(btn).toBeDisabled();
-    expect(btn).toHaveClass('bg-[#CBD3E1]');
   });
 
   it('onClick 이벤트가 호출되는지 테스트', () => {

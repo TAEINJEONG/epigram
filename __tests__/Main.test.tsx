@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { render, screen } from '@/test-utils/test-utils';
 import Main from '@/pages/main';
 import '@testing-library/jest-dom';
 
@@ -9,16 +10,34 @@ jest.mock('next-i18next', () => ({
 }));
 
 // 2) 하위 컴포넌트 모킹 (가벼운 더미)
-jest.mock('@/components/Emotion', () => () => <div data-testid="emotion" />);
-jest.mock('@/components/Feed', () => (props: any) => (
-  <div data-testid={`feed-${props?.feed?.id ?? 'today'}`}>{props?.feed?.content ?? 'today'}</div>
-));
-jest.mock('@/components/Comment', () => (props: any) => (
-  <div data-testid={`comment-${props?.Comment?.id}`}>{props?.Comment?.text ?? ''}</div>
-));
+jest.mock('@/components/Emotion', () => {
+  const MockEmotion: React.FC = () => <div data-testid="emotion" />;
+  MockEmotion.displayName = 'Emotion';
+  return { __esModule: true, default: MockEmotion };
+});
+
+jest.mock('@/components/Feed', () => {
+  type FeedProps = { feed?: { id?: number; content?: string } };
+  const MockFeed: React.FC<FeedProps> = ({ feed }) => (
+    <div data-testid={`feed-${feed?.id ?? 'today'}`}>{feed?.content ?? 'today'}</div>
+  );
+  MockFeed.displayName = 'Feed';
+  return { __esModule: true, default: MockFeed };
+});
+
+jest.mock('@/components/Comment', () => {
+  type CommentModel = { id?: number; text?: string };
+  type CommentProps = { Comment?: CommentModel; me?: { id?: number; nickname?: string } };
+  const MockComment: React.FC<CommentProps> = ({ Comment }) => (
+    <div data-testid={`comment-${Comment?.id}`}>{Comment?.text ?? ''}</div>
+  );
+  MockComment.displayName = 'Comment';
+  return { __esModule: true, default: MockComment };
+});
 
 // 3) 데이터 훅 모킹
 const mockUseTodayEpigram = jest.fn();
+const mockUseTodayEmotion = jest.fn();
 const mockUseInfiniteEpigrams = jest.fn();
 const mockUseInfiniteComments = jest.fn();
 const mockUseMe = jest.fn();
@@ -34,6 +53,9 @@ jest.mock('@/hooks/useComments', () => ({
 }));
 jest.mock('@/hooks/useMe', () => ({
   useMe: () => mockUseMe(),
+}));
+jest.mock('@/hooks/useEmotion', () => ({
+  useTodayEmotion: (...args: unknown[]) => mockUseTodayEmotion(...args),
 }));
 
 // 4) 공통 더미 데이터
@@ -64,18 +86,27 @@ function setDefaultMocks() {
     reachedEnd: false,
   });
   mockUseMe.mockReturnValue({ data: { id: 999, nickname: 'me' } });
+  mockUseTodayEmotion.mockReturnValue({
+    data: false, // hasPicked = false → !hasPicked === true
+    isSuccess: true, // 조건 충족
+    pickEmotion: jest.fn(),
+  });
 }
 
 beforeEach(() => {
   jest.clearAllMocks();
   // jsdom에서 scrollTo 스텁
   // (최상단 이동 버튼 테스트용)
-  // @ts-ignore
   window.scrollTo = jest.fn();
   setDefaultMocks();
 });
 
 describe('<Main />', () => {
+  test('메인 페이지 렌더', () => {
+    render(<Main />);
+    expect(screen.getByText(/^latest$/i)).toBeInTheDocument();
+  });
+
   test('섹션 타이틀과 오늘의 에피그램/감정 컴포넌트가 렌더링 된다', () => {
     render(<Main />);
     // t('today'), t('today_question'), t('latest'), t('latest_comment')
