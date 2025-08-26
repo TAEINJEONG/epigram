@@ -4,14 +4,15 @@ import Link from 'next/link';
 
 type feedProps = {
   feed: Epigram;
+  className?: string;
 };
 
-const Feed = ({ feed }: feedProps) => {
+const Feed = ({ feed, className }: feedProps) => {
   return (
-    <Link href={`/epigrams/${feed.id}`} prefetch={false}>
-      <div className="font-iro">
+    <Link href={`/epigrams/${feed.id}`} prefetch={false} className="block h-full">
+      <div className="h-full flex flex-col justify-between">
         <div
-          className="py-[21px] px-[22px] shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)] rounded-[16px] bg-blue-100"
+          className={`font-iro ${className} py-[21px] px-[22px] shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)] rounded-[16px] bg-blue-100 bg-top bg-size-[100%_auto] bg-no-repeat`}
           style={{ backgroundImage: `url(${noteBg?.src ?? noteBg})` }}
         >
           <p>{feed?.content}</p>
