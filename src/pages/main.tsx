@@ -21,6 +21,7 @@ import { QUERY_KEYS } from '@/lib/QUERY_KEYS';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { listEpigrams } from '@/services/epigrams';
 import { listComments } from '@/services/comments';
+import nextI18NextConfig from '../../next-i18next.config';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const qc = new QueryClient();
@@ -41,7 +42,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'])),
+      ...(await serverSideTranslations(
+        locale ?? 'ko',
+        ['emotion', 'main', 'comment'],
+        nextI18NextConfig,
+      )),
       dehydratedState: dehydrate(qc),
     },
   };

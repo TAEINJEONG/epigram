@@ -19,10 +19,11 @@ import landing3 from '@/assets/images/img_Desktop_landing03.svg';
 import landing4 from '@/assets/images/img_Desktop_landing04.svg';
 import Button from '@/components/Button';
 import Link from 'next/link';
+import nextI18NextConfig from '../../next-i18next.config';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'ko', ['home'])),
+    ...(await serverSideTranslations(locale ?? 'ko', ['home'], nextI18NextConfig)),
   },
 });
 

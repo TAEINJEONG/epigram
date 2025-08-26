@@ -11,6 +11,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useInfiniteEpigrams } from '@/hooks/useEpigrams';
 import Feed from '@/components/Feed';
+import nextI18NextConfig from '../../next-i18next.config';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const qc = new QueryClient();
@@ -25,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       dehydratedState: dehydrate(qc),
-      ...(await serverSideTranslations(locale ?? 'ko', ['feed'])),
+      ...(await serverSideTranslations(locale ?? 'ko', ['feed'], nextI18NextConfig)),
     },
     revalidate: 60,
   };

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { appWithTranslation, UserConfig } from 'next-i18next';
+import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../next-i18next.config';
 import GlobalNavagationBar from '@/components/GNB/index';
 import ModalRoot from '@/components/Modal/ModalRoot';
@@ -51,4 +51,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(MyApp, nextI18NextConfig as UserConfig);
+export default appWithTranslation(MyApp, nextI18NextConfig);
