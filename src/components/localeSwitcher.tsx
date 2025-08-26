@@ -1,21 +1,17 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const LocaleSwitcher = () => {
-  const { locale, locales, asPath, pathname, query, push } = useRouter();
+  const { locale, locales, pathname, query } = useRouter();
   const supported = locales ?? ['ko', 'en'];
   const nextLocale = supported.find((l) => l !== locale) ?? supported[0];
 
-  const handleClick = () => {
-    push({ pathname, query }, asPath, { locale: nextLocale });
-  };
-
   return (
-    <button
-      className="py-1 px-2 cursor-pointer bg-blue-400 text-white rounded-lg"
-      onClick={handleClick}
-    >
-      {nextLocale.toUpperCase()}
-    </button>
+    <Link href={{ pathname, query }} locale={nextLocale}>
+      <button className="py-1 px-2 bg-blue-400 text-white rounded-lg">
+        {nextLocale.toUpperCase()}
+      </button>
+    </Link>
   );
 };
 
