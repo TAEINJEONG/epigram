@@ -11,6 +11,7 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useLogin } from '@/hooks/useLogin';
+import nextI18NextConfig from '../../next-i18next.config';
 
 type SignupForm = {
   email: string;
@@ -21,7 +22,7 @@ type SignupForm = {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'ko', ['join'])),
+    ...(await serverSideTranslations(locale ?? 'ko', ['join'], nextI18NextConfig)),
   },
 });
 

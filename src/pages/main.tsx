@@ -9,7 +9,6 @@ import topArrow from '@/assets/icon/top-arrow-icon.svg';
 
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import nextI18NextConfig from '../../next-i18next.config.js';
 import { useTranslation } from 'next-i18next';
 import { useTodayEpigram } from '@/hooks/useTodayEpigram';
 import { useInfiniteEpigrams } from '@/hooks/useEpigrams';
@@ -22,6 +21,7 @@ import { QUERY_KEYS } from '@/lib/QUERY_KEYS';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { listEpigrams } from '@/services/epigrams';
 import { listComments } from '@/services/comments';
+import nextI18NextConfig from '../../next-i18next.config';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const qc = new QueryClient();
@@ -42,10 +42,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'ko', ['emotion', 'main', 'comment'], {
-        ...nextI18NextConfig,
-        reloadOnPrerender: true,
-      })),
+      ...(await serverSideTranslations(
+        locale ?? 'ko',
+        ['emotion', 'main', 'comment'],
+        nextI18NextConfig,
+      )),
       dehydratedState: dehydrate(qc),
     },
   };

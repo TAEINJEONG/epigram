@@ -9,6 +9,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import logo from '@/assets/images/logo-lg.svg';
 import Link from 'next/link';
+import nextI18NextConfig from '../../next-i18next.config';
 
 type LoginForm = {
   email: string;
@@ -17,7 +18,7 @@ type LoginForm = {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'ko', ['login'])),
+    ...(await serverSideTranslations(locale ?? 'ko', ['login'], nextI18NextConfig)),
   },
 });
 

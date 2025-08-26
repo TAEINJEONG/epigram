@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { appWithTranslation } from 'next-i18next';
-import nextI18NextConfig from '../../next-i18next.config.js';
+import nextI18NextConfig from '../../next-i18next.config';
 import GlobalNavagationBar from '@/components/GNB/index';
 import ModalRoot from '@/components/Modal/ModalRoot';
 import { useState } from 'react';
