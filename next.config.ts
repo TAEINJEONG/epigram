@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  i18n: {
+    locales: ['ko', 'en'],
+    defaultLocale: 'ko',
+    localeDetection: false,
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [

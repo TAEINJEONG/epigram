@@ -5,7 +5,7 @@ const nextI18NextConfig: UserConfig = {
   i18n: {
     locales: ['ko', 'en'],
     defaultLocale: 'ko',
-    localeDetection: false, // 리터럴 false
+    localeDetection: false,
   },
   reloadOnPrerender: process.env.NODE_ENV === 'development',
   localePath: path.resolve('./public/locales'),
