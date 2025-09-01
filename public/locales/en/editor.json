@@ -1,0 +1,15 @@
+{
+  "title": "Create Epigram",
+  "content": "Content",
+  "content_placeholder": "Please enter within 500 characters.",
+  "author": "Author",
+  "enter_directly": "Enter directly",
+  "unknown": "Unknown",
+  "self": "Self",
+  "author_placeholder": "Enter author name",
+  "source": "Source",
+  "source_placeholder": "Enter source title",
+  "tag": "Tag",
+  "tag_placeholder": "Enter a tag (up to 10 characters)",
+  "submit": "Completed"
+}
